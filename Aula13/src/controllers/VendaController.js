@@ -1,0 +1,1 @@
+import VendaModel from "../models/VendaModel.js";

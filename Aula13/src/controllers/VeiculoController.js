@@ -1,0 +1,1 @@
+import VeiculoModel from "../models/VeiculoModel.js";
