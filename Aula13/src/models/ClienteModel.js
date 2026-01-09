@@ -2,6 +2,16 @@ import { query } from "../Data/db.js"
 
 export default class ClienteModel{
 
+    static async BuscarPorEmail(){
+        const sql = `
+        SELECT *
+        FROM clientes
+        WHERE email = $1
+        `;
+        const result = await query(sql, [email]);
+        return result.rows(0) ?? null;
+    }
+
     static async Criar({ nome, documento, email, telefone }){
 
         const sql = `

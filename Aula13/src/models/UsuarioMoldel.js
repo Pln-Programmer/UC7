@@ -5,8 +5,12 @@ export default class UsuarioModel{
 
     static async BuscarPorEmail(){
         const sql = `
-        SELECT
-        `
+        SELECT *
+        FROM usuarios
+        WHERE email = $1
+        `;
+        const result = await query(sql, [email]);
+        return result.rows(0) ?? null;
     }
 
     static async Criar({ nome, email, senha }){
