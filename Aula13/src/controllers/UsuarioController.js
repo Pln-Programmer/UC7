@@ -6,7 +6,7 @@ export default class UsuarioController{
 
     static async Criar(req, res){
         try {
-            const {nome, email, senha} = req.body
+            const {nome, email, senha, perfil} = req.body            
 
             if(!nome || !email ||  !senha){
                 return res.status(400).json({msg: "Dados obrigatorios não informados! Por favor, verifique se todas as informações obrigatorias estão preenchidas"})
@@ -15,7 +15,8 @@ export default class UsuarioController{
             if(verificar){
                 return res.status(400).json ({msg: "Email já cadastrado"})
             }
-            const novoUsuario = await UsuarioModel.Criar({ nome, email, senha })
+            const novoUsuario = await UsuarioModel.Criar(nome, email, senha, perfil)
+            
             return res.status(201).json({msg: "Usuário criado com sucesso", usuario: novoUsuario})
         } catch (error) {
             res.status(500).json({msg: "Erro interno ao criar o usuario", erro: error.message})

@@ -32,6 +32,7 @@ export default class VeiculoController{
             res.status(500).json({msg: "Erro interno ao atualizar o Veiculo", erro: error.message})
         }
     }
+    
 
     static async Deletar(req,res){
         try {

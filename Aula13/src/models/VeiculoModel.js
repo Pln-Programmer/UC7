@@ -1,38 +1,39 @@
-import { query } from "../Data/db.js"
+import { query } from "../Data/db.js";
 
-export default class VeiculoModel{
-
-    static async Criar({ marca, modelo, ano, preco, status }){
-
-        const sql = `
-            INSERT INTO
+export default class VeiculoModel {
+  static async Criar({ marca, modelo, ano, preco, status }) {
+    const sql = `
+            INSERT INTO veiculos(
                 marca,
                 modelo,
                 ano,
                 preco,
                 status
+            )
             VALUES ($1, $2, $3, $4, $5)
             RETURNING
+                id,
                 marca,
                 modelo,
                 ano,
                 preco,
                 status
         `;
-        const dados = [marca, modelo, ano, preco, status];
-        const result = await query(sql, dados);
-        return result.rows[0] ?? null;
-    }
+    const dados = [marca, modelo, ano, preco, status];
+    const result = await query(sql, dados);
+    return result.rows[0] ?? null;
+  }
 
-    static async Atualizar(id, { marca, modelo, ano, preco, status }){
-
-        const sql = `
-            UPDATE
+  static async Atualizar(id, { marca, modelo, ano, preco, status }) {
+    const sql = `
+            UPDATE veiculos
+            SET
                 marca = $1,
                 modelo = $2,
                 ano = $3,
                 preco = $4,
                 status = $5
+            
             WHERE id = $6
             RETURNING
                 marca,
@@ -41,17 +42,17 @@ export default class VeiculoModel{
                 preco,
                 status
         `;
-        const dados = [marca, modelo, ano, preco, status, id];
-        const result = await query(sql, dados);
-        return result.rows[0] ?? null;
-    }
+    const dados = [marca, modelo, ano, preco, status, id];
+    const result = await query(sql, dados);
+    return result.rows[0] ?? null;
+  }
 
-    static async Deletar(id){
-        const sql = `
+  static async Deletar(id) {
+    const sql = `
             DELETE FROM veiculos
             WHERE id = $1
         `;
-        const result = await query(sql, [id]);
-        return result.rows(0) ?? null;
-    }
+    const result = await query(sql, [id]);
+    return result ?? null;
+  }
 }

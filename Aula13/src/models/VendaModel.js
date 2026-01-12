@@ -1,11 +1,18 @@
-import { query } from "../Data/db.js"
+import { query } from "../Data/db.js";
 
-export default class VendaModel{
-
-    static async Criar({ veiculo_id, cliente_id, vendedor_id, valor_final, data_venda, forma_pagamento, status, obsercacoes }){
-
-        const sql = `
-            INSERT INTO
+export default class VendaModel {
+  static async Criar({
+    veiculo_id,
+    cliente_id,
+    vendedor_id,
+    valor_final,
+    data_venda,
+    forma_pagamento,
+    status,
+    observacoes,
+  }) {
+    const sql = `
+            INSERT INTO vendas(
                 veiculo_id, 
                 cliente_id, 
                 vendedor_id, 
@@ -13,8 +20,9 @@ export default class VendaModel{
                 data_venda, 
                 forma_pagamento,
                 status, 
-                obsercacoes
-            VALUES ($1, $2, $3, $4, $5)
+                observacoes
+            )
+            VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
             RETURNING
                 veiculo_id, 
                 cliente_id, 
@@ -23,18 +31,39 @@ export default class VendaModel{
                 data_venda, 
                 forma_pagamento,
                 status, 
-                obsercacoes
+                observacoes
                 
         `;
-        const dados = [veiculo_id, cliente_id, vendedor_id, valor_final, data_venda, forma_pagamento, status, obsercacoes];
-        const result = await query(sql, dados);
-        return result.rows[0] ?? null;
+    const dados = [
+      veiculo_id,
+      cliente_id,
+      vendedor_id,
+      valor_final,
+      data_venda,
+      forma_pagamento,
+      status,
+      observacoes,
+    ];
+    const result = await query(sql, dados);
+    return result.rows[0] ?? null;
+  }
+
+  static async Atualizar(
+    id,
+    {
+      veiculo_id,
+      cliente_id,
+      vendedor_id,
+      valor_final,
+      data_venda,
+      forma_pagamento,
+      status,
+      observacoes,
     }
-
-    static async Atualizar(id, { veiculo_id, cliente_id, vendedor_id, valor_final, data_venda, forma_pagamento, status, obsercacoes }){
-
-        const sql = `
-            UPDATE
+  ) {
+    const sql = `
+            UPDATE vendas
+            SET
                 veiculo_id = $1, 
                 cliente_id = $2, 
                 vendedor_id = $3, 
@@ -42,9 +71,10 @@ export default class VendaModel{
                 data_venda = $5, 
                 forma_pagamento = $6,
                 status = $7, 
-                obsercacoes = $8
+                observacoes = $8
             WHERE id = $9
             RETURNING
+                id,
                 veiculo_id, 
                 cliente_id, 
                 vendedor_id, 
@@ -52,19 +82,29 @@ export default class VendaModel{
                 data_venda, 
                 forma_pagamento,
                 status, 
-                obsercacoes
+                observacoes
         `;
-        const dados = [veiculo_id, cliente_id, vendedor_id, valor_final, data_venda, forma_pagamento, status, obsercacoes];
-        const result = await query(sql, dados);
-        return result.rows[0] ?? null;
-    }
+    const dados = [
+      veiculo_id,
+      cliente_id,
+      vendedor_id,
+      valor_final,
+      data_venda,
+      forma_pagamento,
+      status,
+      observacoes,
+      id
+    ];
+    const result = await query(sql, dados);
+    return result.rows[0] ?? null;
+  }
 
-    static async Deletar(id){
-        const sql = `
+  static async Deletar(id) {
+    const sql = `
             DELETE FROM vendas
             WHERE id = $1
         `;
-        const result = await query(sql, [id]);
-        return result.rows(0) ?? null;
-    }
+    const result = await query(sql, [id]);
+    return result ?? null;
+  }
 }
