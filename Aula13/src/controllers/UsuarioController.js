@@ -104,6 +104,7 @@ export default class UsuarioController {
         {
           id: usuario.id,
           email: usuario.email,
+          perfil: usuario.perfil
         },
         process.env.JWT_SECRET,
         { expiresIn: "1h" }

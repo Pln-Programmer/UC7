@@ -4,7 +4,7 @@ CREATE TABLE usuarios (
     nome VARCHAR(100) NOT NULL,
     email VARCHAR(150) NOT NULL UNIQUE,
     senha_hash TEXT NOT NULL,
-    perfil Varchar(50) check (perfil in ('Admin', 'Seller')) default 'Seller'
+    perfil Varchar(50) check (perfil in ('admin', 'seller')) 
 );
 
 -- CLIENTES
@@ -37,7 +37,7 @@ CREATE TABLE vendas (
     valor_final NUMERIC(10,2) NOT NULL CHECK (valor_final > 0),
     data_venda TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     forma_pagamento VARCHAR(50) NOT NULL,
-    status status_venda NOT NULL,
+    status varchar(100) NOT NULL,
     observacoes TEXT,
 
     CONSTRAINT fk_venda_veiculo
