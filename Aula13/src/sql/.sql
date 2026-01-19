@@ -4,16 +4,21 @@ CREATE TABLE usuarios (
     nome VARCHAR(100) NOT NULL,
     email VARCHAR(150) NOT NULL UNIQUE,
     senha_hash TEXT NOT NULL,
-    perfil Varchar(50) check (perfil in ('admin', 'seller')) 
+    perfil Varchar(50) check (perfil in ('admin', 'seller', 'cliente')) 
 );
 
 -- CLIENTES
 CREATE TABLE clientes (
     id SERIAL PRIMARY KEY,
+    usuario_id INT not null unique,
     nome VARCHAR(100) NOT NULL,
     documento VARCHAR(30) NOT NULL UNIQUE,
     email VARCHAR(150) UNIQUE,
-    telefone VARCHAR(20)
+    telefone VARCHAR(20),
+    CONSTRAINT fk_cliente_usuario
+        FOREIGN KEY (usuario_id)
+        REFERENCES usuarios (id)
+        ON DELETE RESTRICT
 );
 
 -- VEÍCULOS

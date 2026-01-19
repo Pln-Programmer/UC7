@@ -1,6 +1,25 @@
 import { query } from "../Data/db.js";
 
 export default class VendaModel {
+
+  static async listarGeral(){
+
+  }
+
+  static async listarCliente(id){
+    const sql = `
+    select * from vendas
+    where 
+    `
+    const sql1 = `
+      select nome from clientes
+      where id = $1`
+  }
+
+  static async listarVendedor(){
+    
+  }
+
   static async Criar({
     veiculo_id,
     cliente_id,
@@ -32,6 +51,11 @@ export default class VendaModel {
                 forma_pagamento,
                 status, 
                 observacoes
+
+            UPDATE veiculos
+            SET
+                status = 'Reservado'
+            WHERE id = $1
                 
         `;
     const dados = [
@@ -100,10 +124,21 @@ export default class VendaModel {
   }
 
   static async Deletar(id) {
+     const sql1 = `
+            select veiculo_id from vendas
+            where id = $1
+        `;
     const sql = `
             DELETE FROM vendas
             WHERE id = $1
         `;
+   
+    const slq2 = `
+            UPDATE veiculos
+            SET status = 'Disponivel'
+            WHERE id = ${sql1}
+        `;
+      
     const result = await query(sql, [id]);
     return result ?? null;
   }

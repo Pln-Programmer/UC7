@@ -1,6 +1,17 @@
 import { query } from "../Data/db.js";
 
 export default class VeiculoModel {
+
+  static async listar(){
+    const sql = `
+      SELECT * FROM veiculos
+      WHERE status = 'Disponivel'
+    `;
+    const result = await query (sql);
+    return result.rows ?? null;
+  }
+  
+
   static async Criar({ marca, modelo, ano, preco, status }) {
     const sql = `
             INSERT INTO veiculos(

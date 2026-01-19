@@ -1,6 +1,19 @@
 import { query } from "../Data/db.js";
 
 export default class ClienteModel {
+
+  static async read({ nome, documento, email, telefone }){
+    const sql = `
+      SELECT nome, 
+      documento, 
+      email, 
+      telefone
+      FROM clientes
+    `;
+    const result = await query (sql, [nome, documento, email, telefone]);
+    return result.rows[0] ?? null;
+  }
+
   static async BuscarPorEmail(email) {
     const sql = `
         SELECT *

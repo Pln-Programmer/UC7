@@ -4,6 +4,15 @@ import 'dotenv/config'
 
 export default class VeiculoController{
 
+    static async listar(req,res){
+        try {
+            const veiculos = await VeiculoModel.listar();
+            return res.status(200).json(veiculos);
+        } catch (error) {
+            
+        }
+    }
+
     static async Criar(req, res){
         try {
             const {marca, modelo, ano, preco, status} = req.body

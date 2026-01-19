@@ -17,7 +17,8 @@ function permitirPerfil(perfisPermitidos) {
 
 export const autorization = {
     admin: permitirPerfil(["admin"]),
-    seller: permitirPerfil(["seller"])
+    seller: permitirPerfil(["seller"]),
+    client: permitirPerfil(["client"])
 }
 
 export { permitirPerfil}

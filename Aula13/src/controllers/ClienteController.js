@@ -51,4 +51,14 @@ export default class ClienteController{
         }
        
     }
+
+    static async read(req, res){
+        try {
+            const { nome, documento, email, telefone } = req.body;
+            const clientes = await ClienteModel.read({ nome, documento, email, telefone });
+            return res.status(200).json(clientes);
+        } catch (error) {
+            res.status(500).json({msg: "Erro interno ao ler o cliente", erro: error.message})
+        }
+    }
 }
