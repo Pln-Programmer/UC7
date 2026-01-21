@@ -6,16 +6,16 @@ export default class ClienteController{
 
     static async Criar(req, res){
         try {
-            const {nome, documento, email, telefone} = req.body
+            const {nome, documento, email, telefone, usuario_id} = req.body
 
-            if(!nome || !documento || !email || !telefone){
+            if(!nome || !documento || !email || !telefone || !usuario_id){
                 return res.status(400).json({msg: "Dados obrigatorios não informados! Por favor, verifique se todas as informações obrigatorias estão preenchidas"})
             }
             const verificar = await ClienteModel.BuscarPorEmail(email)
             if(verificar){
                 return res.status(400).json ({msg: "Email já cadastrado"})
             }
-            const novoCliente = await ClienteModel.Criar({ nome, documento, email, telefone })
+            const novoCliente = await ClienteModel.Criar({ nome, documento, email, telefone, usuario_id })
             return res.status(201).json({msg: "Cliente criado com sucesso", Cliente: novoCliente})
         } catch (error) {
             res.status(500).json({msg: "Erro interno ao criar o Cliente", erro: error.message})

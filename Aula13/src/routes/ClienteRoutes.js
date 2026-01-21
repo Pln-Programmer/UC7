@@ -5,8 +5,9 @@ import autorization from "../middleware/autorizationMiddleware.js"
 const router = express.Router()
 
 router.post("/", ClienteController.Criar)
+router.get("/", autentificar, ClienteController.read)
 router.put("/:id", autentificar,ClienteController.Atualizar)
 router.delete("/:id", autentificar,ClienteController.Deletar)
-router.get("/", autentificar, ClienteController.read)
+
 
 export default router

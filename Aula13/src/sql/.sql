@@ -4,7 +4,7 @@ CREATE TABLE usuarios (
     nome VARCHAR(100) NOT NULL,
     email VARCHAR(150) NOT NULL UNIQUE,
     senha_hash TEXT NOT NULL,
-    perfil Varchar(50) check (perfil in ('admin', 'seller', 'cliente')) 
+    perfil Varchar(50) check (perfil in ('admin', 'seller', 'client')) 
 );
 
 -- CLIENTES

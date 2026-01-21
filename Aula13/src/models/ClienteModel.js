@@ -24,23 +24,25 @@ export default class ClienteModel {
     return result.rows[0] ?? null;
   }
 
-  static async Criar({ nome, documento, email, telefone }) {
+  static async Criar({ nome, documento, email, telefone, usuario_id }) {
     const sql = `
             INSERT INTO clientes(
+                usuario_id,
                 nome,
                 documento,
                 email,
                 telefone
             )
-            VALUES ($1, $2, $3, $4)
+            VALUES ($1, $2, $3, $4, $5)
             RETURNING
                 id,
+                usuario_id,
                 nome,
                 documento,
                 email,
                 telefone
         `;
-    const dados = [nome, documento, email, telefone];
+    const dados = [usuario_id, nome, documento, email, telefone];
     const result = await query(sql, dados);
     return result.rows[0] ?? null;
   }

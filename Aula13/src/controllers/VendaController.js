@@ -3,6 +3,44 @@ import bcrypt from 'bcrypt'
 import 'dotenv/config'
 
 export default class VendaController{
+    
+    static async ListarGeral(req, res){
+        try {
+            const cliente = await VendaModel.listarGeral();
+            if(!cliente){
+                return res.status(404).json({msg: "Nenhum cliente encontrado!"})
+            }
+            res.status(200).json(cliente);
+        } catch (error) {
+            res.status(500).json({msg: "Erro interno ao listar as Vendas", erro: error.message})
+        }
+    }
+
+    static async ListarCliente(req, res){
+        try {
+            const cliente_id = req.params.cliente_id
+            const cliente = await VendaModel.listarCliente(cliente_id);
+            if(!cliente){
+                return res.status(404).json({msg: "Nenhum cliente encontrado!"})
+            }
+            res.status(200).json(cliente);
+        } catch (error) {
+            res.status(500).json({msg: "Erro interno ao listar as Vendas", erro: error.message})
+        }
+    }
+
+    static async ListarVendedor(req, res){
+        try {
+            const vendedor_id = req.params.vendedor_id
+            const vendedor = await VendaModel.listarVendedor(vendedor_id);
+            if(!vendedor){
+                return res.status(404).json({msg: "Nenhum vendedor encontrado!"})
+            }
+            res.status(200).json(vendedor);
+        } catch (error) {
+            res.status(500).json({msg: "Erro interno ao listar as Vendas", erro: error.message})
+        }
+    }
 
     static async Criar(req, res){
         try {

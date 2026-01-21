@@ -6,7 +6,8 @@ const router = express.Router()
 
 router.post("/", UsuarioController.Criar)
 router.post("/login", UsuarioController.Login)
+router.get("/perfil", autentificar, UsuarioController.ListarVendedor)
 router.put("/:id", autentificar, UsuarioController.Atualizar)
-router.delete("/:id",autentificar, autorization["admin"], UsuarioController.Deletar)
+router.delete("/:id",autentificar, UsuarioController.Deletar)
 
 export default router

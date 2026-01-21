@@ -3,21 +3,29 @@ import { query } from "../Data/db.js";
 export default class VendaModel {
 
   static async listarGeral(){
-
+    const sql = `
+    SELECT * FROM vendas`
+    const result = await query(sql, []);
+    return result.rows;
   }
 
-  static async listarCliente(id){
+  static async listarCliente(cliente_id){
     const sql = `
     select * from vendas
-    where 
+    where cliente_id = $1
     `
-    const sql1 = `
-      select nome from clientes
-      where id = $1`
+    const result = await query(sql, [cliente_id]);
+    return result.rows[0] ?? null;
+
   }
 
-  static async listarVendedor(){
-    
+  static async listarVendedor(vendedor_id){
+    const sql = `
+    select * from vendas
+    where vendedor_id = $1
+    `
+    const result = await query(sql, [vendedor_id]);
+    return result.rows[0] ?? null;
   }
 
   static async Criar({

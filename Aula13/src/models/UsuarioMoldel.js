@@ -2,6 +2,18 @@ import { query } from "../Data/db.js";
 import bcrypt from "bcrypt";
 
 export default class UsuarioModel {
+
+  static async listarVendedor(nome, email){
+    const sql = `
+    SELECT 
+    nome, 
+    email
+    FROM vendas
+    `
+    const result = await query(sql, [nome, email]);
+    return result.rows[0] ?? null;
+  }
+
   static async BuscarPorEmail(email) {
     const sql = `
         SELECT *

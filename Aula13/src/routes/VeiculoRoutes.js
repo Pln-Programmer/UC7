@@ -4,9 +4,9 @@ import autentificar from "../middleware/authMiddleware.js"
 import autorization from "../middleware/autorizationMiddleware.js"
 const router = express.Router()
 
-router.get ("/", VeiculoController.listar)
-router.post("/", VeiculoController.Criar)
-router.put("/:id", VeiculoController.Atualizar)
-router.delete("/:id", VeiculoController.Deletar)
+router.get ("/", autentificar, VeiculoController.listar)
+router.post("/", autentificar, autorization["seller"], VeiculoController.Criar)
+router.put("/:id", autentificar, autorization["seller"], VeiculoController.Atualizar)
+router.delete("/:id", autentificar, autorization["admin", "seller"], VeiculoController.Deletar)
 
 export default router
